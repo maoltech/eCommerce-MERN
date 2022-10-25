@@ -127,16 +127,16 @@ height: 50vh;
 `
 
 const SummaryItem = styled.div`
-margin: 10px 0px;
+margin: 30px 0px;
 display: flex;
 justify-content: space-between;
 font-weight: ${props=>props.type === 'total' && '500'};
-font-size: ${props=>props.type === 'total' && '14px'};
+font-size: ${props=>props.type === 'total' && '24px'};
 
 `
 
 const SummaryTitle = styled.h1`
-font-weight: 150;
+font-weight: 200;
 
 `
 
@@ -146,11 +146,11 @@ const SummaryItemText = styled.span`
 
 const SummaryItemPrice = styled.span``
 const Button = styled.button`
-width: 80%;
-padding: 8px;
+width: 100%;
+padding: 10px;
 background-color: black;
 color: white;
-font-weight: 400;
+font-weight: 600;
 border-radius: 20px;
 cursor: pointer;
 `
