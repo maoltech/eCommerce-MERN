@@ -92,7 +92,7 @@ const ProductSize =styled.span`
 const Details =styled.div`
 padding: 20px;
 display: flex;
-flex-direction:column;
+flex-direction:column; 
 justify-content: space-around;
 `
 
@@ -119,23 +119,24 @@ height: 1px;
 
 const Summary = styled.div`
 flex: 1;
+font-size: 10;
 border: 0.5px solid lightgray;
 border-radius: 10px;
-padding: 20px;
+padding: 15px;
 height: 50vh;
 `
 
 const SummaryItem = styled.div`
-margin: 30px 0px;
+margin: 10px 0px;
 display: flex;
 justify-content: space-between;
 font-weight: ${props=>props.type === 'total' && '500'};
-font-size: ${props=>props.type === 'total' && '24px'};
+font-size: ${props=>props.type === 'total' && '14px'};
 
 `
 
 const SummaryTitle = styled.h1`
-font-weight: 200;
+font-weight: 150;
 
 `
 
@@ -145,11 +146,11 @@ const SummaryItemText = styled.span`
 
 const SummaryItemPrice = styled.span``
 const Button = styled.button`
-width: 100%;
-padding: 10px;
+width: 80%;
+padding: 8px;
 background-color: black;
 color: white;
-font-weight: 600;
+font-weight: 400;
 border-radius: 20px;
 cursor: pointer;
 `

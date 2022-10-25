@@ -9,6 +9,7 @@ import {mobile} from '../responsive';
 import {useLocation} from 'react-router-dom';
 import {useState, useEffect} from 'react';
 import { publicRequest } from '../requestMethod';
+import {addProduct} from '../redux/cartRedux';
 import { useDispatch } from 'react-redux';
 
 const Container = styled.div`
@@ -125,10 +126,10 @@ const Product = () => {
     useEffect(()=>{
         const getProduct = async ()=>{ 
             try {
-                const res = await publicRequest.get(`/products/find/${id}`)
+                const res = await publicRequest.get('/product/find/' + id)
                 setProduct(res.data);
             } catch (error) {
-              console.log (error.message)  
+              console.log (error)  
             }
         }
         getProduct()
@@ -140,10 +141,10 @@ const Product = () => {
     }else{
         setQuantity(quantity+1)
     }
-}
+} 
 
     const handleCart = () =>{
-
+       dispatch(addProduct({...product, quantity, color, size}));
     }
 
     return ( 
@@ -167,7 +168,7 @@ const Product = () => {
                         </Filter>
                         <Filter>
                             <FilterTitle>Size</FilterTitle>
-                            <FilterSize onChange={()=> setSize(e.target.value)}>
+                            <FilterSize onChange={(e)=> setSize(e.target.value)}>
                             {product.size?.map((s)=>(
                                 <FilterSizeOption key={s}>{s}</FilterSizeOption>
                             ))}

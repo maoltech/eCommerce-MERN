@@ -90,11 +90,14 @@ const Navbar = () => {
                     <Link to="/login" style={{textDecoration: 'none' }}>
                         <MenuItem>Login</MenuItem>
                     </Link>
+
+                    <Link to='/cart'>
                     <MenuItem>
                     <Badge badgeContent={quantity} color="primary">
                         <ShoppingCartOutlinedIcon color="action" />
                     </Badge>
                     </MenuItem>
+                    </Link>
                 </Right>
 
             </Wrapper>

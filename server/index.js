@@ -19,6 +19,7 @@ mongoose.connect(
     .catch((err) =>{
         console.log(err);
     })
+
     app.use(express.json());
 
     app.use("/api/auth", authRoute);
