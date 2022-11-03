@@ -5,6 +5,15 @@ import Footer from '../components/Footer';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import {mobile} from '../responsive';
+import StripeCheckout from 'react-stripe-checkout';
+import {useSelector} from 'react-redux';
+import {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {userRequest} from '../requestMethod';
+
+const KEY = process.env.REACT_APP_STRIPE;
+
+
 
 const Container = styled.div`
 
@@ -145,7 +154,7 @@ const SummaryItemText = styled.span`
 `
 
 const SummaryItemPrice = styled.span``
-const Button = styled.button`
+/*const StripeCheckout = styled.button`
 width: 100%;
 padding: 10px;
 background-color: black;
@@ -154,8 +163,35 @@ font-weight: 600;
 border-radius: 20px;
 cursor: pointer;
 `
-
+*/
 const Cart = () => {
+    const cart = useSelector(state=>state.cart);
+    const [stripeToken, setStripeToken] = useState(null);
+    const navigate = useNavigate()
+
+    const onToken = (token)=>{
+        setStripeToken(token)
+    }
+
+    useEffect(()=>{
+        const makeRequest = async () =>{
+            try {
+                const res = await userRequest.post('/checkout/payment', {
+                    tokenId: stripeToken.id,
+                    amount: cart.total*100,
+                    
+                });
+                navigate('/success',{data:res.data})
+            } catch (error) {
+                navigate('/failed')
+                console.log(error.messsage);
+             }
+         };
+         stripeToken && cart.total >= 1 && makeRequest();
+
+    },[stripeToken, cart.total,navigate])
+
+
     return ( 
         <Container>
             <Anouncement />
@@ -173,51 +209,32 @@ const Cart = () => {
                 </Top>
                 <Bottom>
                     <Info>
-                        <Product>
+                        {cart.products.map(product=>(<Product>
                             <ProductDetail>
                                 <Image src={require('../images/blender.jpg')}/>
                                 <Details>
-                                    <ProductName><b>Product:</b> DAWOO BLENDER</ProductName>
-                                    <ProductID><b>ID:</b> 123456789</ProductID>
-                                    <ProductColor color='red'/>
-                                    <ProductSize><b>SIZE:</b> 37.5</ProductSize>
+                                    <ProductName><b>Product:</b> {product.title}</ProductName>
+                                    <ProductID><b>ID:</b> {product._id}</ProductID>
+                                    <ProductColor color={product.color}/>
+                                    <ProductSize><b>SIZE:</b> {product.size}</ProductSize>
                                 </Details>
                             </ProductDetail>
                             <PriceDetail>
                                 <ProductAmountContainer>
                                     <AddIcon/>
-                                    <ProductAmount>2</ProductAmount>
+                                    <ProductAmount>{product.quantity}</ProductAmount>
                                     <RemoveIcon/>
                                 </ProductAmountContainer>
                             </PriceDetail>
-                            <ProductPrice>&#8358;20000</ProductPrice>
-                        </Product>
+                            <ProductPrice>&#8358;{product.price}</ProductPrice>
+                        </Product>))}
                         <Hr/>
-                        <Product>
-                            <ProductDetail>
-                                <Image src={require('../images/airfryer.jpg')}/>
-                                <Details>
-                                    <ProductName><b>Product:</b> SILVER CREST AIRFRYER</ProductName>
-                                    <ProductID><b>ID:</b> 987654321</ProductID>
-                                    <ProductColor color='green'/>
-                                    <ProductSize><b>SIZE:</b> 40.5</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <AddIcon/>
-                                    <ProductAmount>3</ProductAmount>
-                                    <RemoveIcon/>
-                                </ProductAmountContainer>
-                            </PriceDetail>
-                            <ProductPrice>&#8358;10000</ProductPrice>
-                        </Product>
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                         <SummaryItem>
                             <SummaryItemText>Subtotal</SummaryItemText>
-                            <SummaryItemPrice>&#8358;30000</SummaryItemPrice>
+                            <SummaryItemPrice>&#8358;{cart.total}</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -225,13 +242,22 @@ const Cart = () => {
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>Shipping Discount</SummaryItemText>
-                            <SummaryItemPrice>-&#8358;1000</SummaryItemPrice>
+                            <SummaryItemPrice>-&#8358;{cart.total*0.25}</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem type='total'>
                             <SummaryItemText>Total</SummaryItemText>
-                            <SummaryItemPrice>&#8358;34000</SummaryItemPrice>
+                            <SummaryItemPrice>&#8358;{cart.total}</SummaryItemPrice>
                         </SummaryItem>
-                        <Button>Checkout Now</Button>
+                        <StripeCheckout
+                            name='MJecommerce'
+                            image='https://avatars.githubusercontent.com/u/1486366?v=4'
+                            billingAddress
+                            shippingAddress
+                            description={`Your total is ${cart.total}`}
+                            amount={cart.total*100}
+                            token={onToken}
+                            stripeKey={KEY}
+                         />
                     </Summary>
                 </Bottom>
             </Wrapper>

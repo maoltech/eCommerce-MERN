@@ -115,7 +115,7 @@ cursor: pointer;
 
 const Product = () => {
     const location = useLocation();
-    const id =location.pathname.split("/")[2];
+    const id =location.pathname.split("/")[2]; 
     const [product, setProduct] = useState({});
     const [quantity, setQuantity] = useState(1);
     const [color, setColor] = useState('');
@@ -153,7 +153,7 @@ const Product = () => {
             <Navbar />
             <Wrapper>
                 <ImgContainer>
-                    <Image src={product.img} />
+                    <Image src={require('../images/blender.jpg')} />
                 </ImgContainer>
                 <InfoContainer>
                     <Title>{product.title}</Title> 

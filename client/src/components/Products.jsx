@@ -48,7 +48,7 @@ const Products = ({cat, filters, sort}) => {
                     (prev)=>
                     [...prev].sort((a,b)=>a.createdAt - b.createdAt)
                      )
-         }else if(sort='asc'){
+         }else if(sort === 'asc'){
             setFiltered(
                 (prev)=>
                 [...prev].sort((a,b)=>a.price - b.price)

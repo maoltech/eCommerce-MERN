@@ -4,10 +4,14 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Product from "./pages/Product";
 import ProductList from "./pages/ProductList";
+import Success from "./pages/success";
+import Failed from "./pages/failed";
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 
 
 const App = () => {
+
+ 
   const user = false; 
   return(<Router>
     <Routes>
@@ -17,6 +21,8 @@ const App = () => {
       <Route path='/register' element={<Register />} />
       <Route path='/product/:id' element={<Product />} />
       <Route path='/products/:category' element={<ProductList />} />
+      <Route path='/success' element={<Success />} />
+      <Route path='/failed' element={<Failed />} />
     </Routes>
   </Router>)
 };
