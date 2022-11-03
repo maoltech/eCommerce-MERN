@@ -183,6 +183,7 @@ const Cart = () => {
                 });
                 navigate('/success',{data:res.data})
             } catch (error) {
+                navigate('/failed')
                 console.log(error.messsage);
              }
          };
