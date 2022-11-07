@@ -181,9 +181,10 @@ const Cart = () => {
                     amount: cart.total*100,
                     
                 });
-                navigate('/success',{data:res.data})
+              navigate('/success',{data:res.data}) 
+            console.log(`${res}`)
             } catch (error) {
-                navigate('/failed')
+                navigate('/failed') 
                 console.log(error.messsage);
              }
          };
@@ -209,7 +210,7 @@ const Cart = () => {
                 </Top>
                 <Bottom>
                     <Info>
-                        {cart.products.map(product=>(<Product>
+                        {cart.products.map(product=>(<Product key={product._id}>
                             <ProductDetail>
                                 <Image src={require('../images/blender.jpg')}/>
                                 <Details>
@@ -221,9 +222,9 @@ const Cart = () => {
                             </ProductDetail>
                             <PriceDetail>
                                 <ProductAmountContainer>
-                                    <AddIcon/>
+                                    <AddIcon />
                                     <ProductAmount>{product.quantity}</ProductAmount>
-                                    <RemoveIcon/>
+                                    <RemoveIcon />
                                 </ProductAmountContainer>
                             </PriceDetail>
                             <ProductPrice>&#8358;{product.price}</ProductPrice>
