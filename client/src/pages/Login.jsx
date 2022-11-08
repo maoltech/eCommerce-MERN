@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import image from '../images/background.jpg';
 import {mobile} from '../responsive';
-
+import { useState } from 'react';
 const Container = styled.div`
 width: 100vw;
 height: 100vh;
@@ -60,11 +60,12 @@ cursor: pointer;
 `
 
 const Login = () => {
-    const [ussername, setUsername] = useState('')
+    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     const handleClick = (e) =>{
         e.preventDefault()
+        console.log(username, password)
     }
     return ( 
         <Container>
@@ -77,7 +78,7 @@ const Login = () => {
                     />
                     <Input 
                         placeholder='Password'
-                        onChange={(e)=> setUsername(e.target.value)}
+                        onChange={(e)=> setPassword(e.target.value)}
                     />
                     <Button onClick={handleClick}>CREATE</Button>
                     <Link>Do not remember your password</Link>
