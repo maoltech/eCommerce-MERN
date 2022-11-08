@@ -57,20 +57,32 @@ font-size: 12px;
 text-decoration: underline;
 cursor: pointer;
 
-
 `
 
 const Login = () => {
+    const [ussername, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleClick = (e) =>{
+        e.preventDefault()
+    }
     return ( 
         <Container>
             <Wrapper>
                 <Title>SIGN IN</Title>
                 <Form>
-                    <Input placeholder='Username'/>
-                    <Input placeholder='Password'/>
-                    <Button>CREATE</Button>
+                    <Input 
+                        placeholder='Username'
+                        onChange={(e)=> setUsername(e.target.value)}
+                    />
+                    <Input 
+                        placeholder='Password'
+                        onChange={(e)=> setUsername(e.target.value)}
+                    />
+                    <Button onClick={handleClick}>CREATE</Button>
                     <Link>Do not remember your password</Link>
-                    <Link>Create a new account</Link>
+                    <Link to='/register'>Create a new account</Link>
+
                 </Form>
             </Wrapper>
         </Container>
