@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import image from '../images/background.jpg';
 import {mobile} from '../responsive';
 import { useState } from 'react';
+import { login } from '../redux/apiCalls';
+import { useDispatch } from 'react-redux';
+
 const Container = styled.div`
 width: 100vw;
 height: 100vh;
@@ -60,12 +63,13 @@ cursor: pointer;
 `
 
 const Login = () => {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
 
-    const handleClick = (e) =>{
-        e.preventDefault()
-        console.log(username, password)
+    const handleClick = (e) => {
+        e.preventDefault();
+        login()
     }
     return ( 
         <Container>
@@ -78,9 +82,10 @@ const Login = () => {
                     />
                     <Input 
                         placeholder='Password'
+                        type='password'
                         onChange={(e)=> setPassword(e.target.value)}
                     />
-                    <Button onClick={handleClick}>CREATE</Button>
+                    <Button onClick={handleClick}>Login</Button>
                     <Link>Do not remember your password</Link>
                     <Link to='/register'>Create a new account</Link>
 
