@@ -1,22 +1,27 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 
-const cartSlice = createSlice({
-    name: 'cart',
+const userSlice = createSlice({
+    name: 'user',
     initialState: {
-        products:[],
-        quantity: 0, 
-        total: 0
+        currentUser: null,
+        isFetching: false,
+        error: false,
     },
     reducers:{
-        addProduct: (state, action)=>{
-            state.quantity += 1;
-            state.products.push(action.payload);
-            state.total += action.payload.price*action.payload.quantity;
+        loginStart: (state) => {
+            state.isFetching = true;
         },
+        loginSuccess: (state, action) =>{
+            state.currentUser = action.payload;
+            state.isFetching = false;
+        },
+        loginFailure: (state) => {
+            state.error = true;
+        }
     }
     
 })
 
-export const {addProduct} = cartSlice.actions;
-export default cartSlice.reducer;
+export const { loginStart, loginSuccess, loginFailure} = userSlice.actions;
+export default userSlice.reducer;
