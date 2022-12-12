@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const User = require("../modules/User");
 const CryptoJS = require("crypto-js");
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 // REGISTER
@@ -42,7 +42,7 @@ router.post("/login", async (req,res) =>{
             res.status(200).json({...others, accessToken});
 
     }catch(err){
-        res.status(500).json(err);
+        res.status(500).json({message: `${err}`});
     }
 }
 )
